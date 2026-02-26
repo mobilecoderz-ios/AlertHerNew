@@ -26,7 +26,11 @@ class _SplashScreenState extends State<SplashScreen> {
       } else if (await LocalStorage().isDefaultLanguageSelected() == false) {
         context.pushReplacement(Routes.selectLanguage);
       } else {
-        context.pushReplacement(Routes.loginMobile);
+
+        //MARK : - CHANGED MY D.J
+        //context.pushReplacement(Routes.loginMobile);
+        context.pushReplacement(Routes.loginEmail);
+
       }
     });
   }

@@ -234,7 +234,7 @@ class _LoginEmailScreenState extends State<LoginEmailScreen> {
                       Row(
                         mainAxisAlignment: MainAxisAlignment.center,
                         children: [
-                          const Text("Login with Phone no ."),
+                          const Text("Login with Phone no GFJ."),
                           TextButton(
                             onPressed: () {
                               context.go(Routes.loginMobile);

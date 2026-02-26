@@ -230,7 +230,10 @@ class _LoginEmailPasswordScreenState extends State<LoginEmailPasswordScreen> {
                         );
                       }),
 
+                  // MARK: - CHANGED BY D.J
+                      /*
                       SB.h(36),
+
                       Row(
                         mainAxisAlignment: MainAxisAlignment.center,
                         children: [
@@ -250,7 +253,10 @@ class _LoginEmailPasswordScreenState extends State<LoginEmailPasswordScreen> {
                           ),
                         ],
                       ),
+
+                      */
                       SB.h(25),
+
                       Row(
                         mainAxisAlignment: MainAxisAlignment.center,
                         children: [
