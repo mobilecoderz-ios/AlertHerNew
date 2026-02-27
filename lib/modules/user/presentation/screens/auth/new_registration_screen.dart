@@ -472,6 +472,9 @@ class _NewRegistrationScreenState extends State<NewRegistrationScreen> {
                             // isDisabled: !isMobileNumberValid,
                           ),
                         ),
+
+                     //MARK: - CHANGED BY D.J
+                        /*
                         SB.h(30),
                         Row(
                           mainAxisAlignment: MainAxisAlignment.center,
@@ -494,7 +497,9 @@ class _NewRegistrationScreenState extends State<NewRegistrationScreen> {
                             ),
                           ],
                         ),
-                        SB.h(15),
+
+                        */
+                        SB.h(25),
                         Row(
                           mainAxisAlignment: MainAxisAlignment.center,
                           children: [
