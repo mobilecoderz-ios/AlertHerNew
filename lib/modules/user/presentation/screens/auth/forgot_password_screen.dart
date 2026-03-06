@@ -76,6 +76,7 @@ class _ForgotPasswordScreenState extends State<ForgotPasswordScreen> {
                           topRight: Radius.circular(30),
                         ),
                       ),
+                      
                       padding:
                       const EdgeInsets.only(top: 20, left: 20, right: 20),
                       child: SingleChildScrollView(
