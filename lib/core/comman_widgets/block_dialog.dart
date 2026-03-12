@@ -60,7 +60,8 @@ class _BlockDialogState extends State<BlockDialog> {
                     homeVM.resetValues();
 
                     await LocalStorage().logout();
-                    context.go(Routes.loginMobile);
+                    //context.go(Routes.loginMobile);
+                    context.go(Routes.loginEmail);
                   },
                 ),
               ],

@@ -109,6 +109,8 @@ class _ProfileScreenState extends State<ProfileScreen> {
                           mainAxisAlignment: MainAxisAlignment.start,
                           crossAxisAlignment: CrossAxisAlignment.start,
                           children: [
+                            //by d.j
+                            /*
                             TextSubHeading(text: AppLocalizations.of(context).translate('enterUsername'),fontSize: 13,fontWeight: FontWeight.w400,color: MyColors.blackLight,),
                             SB.h(10),
                             NormalTextField(
@@ -121,6 +123,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
                               disableTextColor: MyColors.black,
                             ),
                             SB.h(15),
+                            */
                             TextSubHeading(text: AppLocalizations.of(context).translate('email'),fontSize: 13,fontWeight: FontWeight.w400,color: MyColors.blackLight,),
                             SB.h(10),
                             NormalTextField(

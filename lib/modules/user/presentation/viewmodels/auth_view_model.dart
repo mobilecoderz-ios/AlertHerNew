@@ -114,23 +114,22 @@ class AuthViewModel with ChangeNotifier {
             await LocalStorage().removeRemember();
           }
           context.pushReplacement(Routes.home);
-          var subsRes =  LocalSubscriptionResponse(
-            subscriptionStatus: res?.subscriptionStatus,
+          var subsRes = LocalSubscriptionResponse(
+              subscriptionStatus: res?.subscriptionStatus,
               planId: res?.subscription?.planId,
-            title: res?.subscription?.title,
-            description: res?.subscription?.description,
-            currencyCode: res?.subscription?.currencyCode,
-            currencySymbol: res?.subscription?.currencySymbol,
-            duration: res?.subscription?.duration,
-            durationType: res?.subscription?.durationType,
-            price: res?.subscriptionPrice,
-            rawPrice: res?.subscription?.rawPrice,
-            subscriptionStart: res?.subscriptionStart,
-            subscriptionEnd: res?.subscriptionEnd
-          );
+              title: res?.subscription?.title,
+              description: res?.subscription?.description,
+              currencyCode: res?.subscription?.currencyCode,
+              currencySymbol: res?.subscription?.currencySymbol,
+              duration: res?.subscription?.duration,
+              durationType: res?.subscription?.durationType,
+              price: res?.subscriptionPrice,
+              rawPrice: res?.subscription?.rawPrice,
+              subscriptionStart: res?.subscriptionStart,
+              subscriptionEnd: res?.subscriptionEnd);
           print(subsRes.toJson());
           SharedPref().save('user', json.encode(subsRes));
-    //.setString('user', json.encode(res));
+          //.setString('user', json.encode(res));
           // if(res?.subscription != null) {
           //   await LocalStorage().saveSubscribeInfo(
           //     id: res?.subscription?.planId,
@@ -148,6 +147,7 @@ class AuthViewModel with ChangeNotifier {
           //   );
           // }
         } else {
+          print("yes coming from mobile");
           mobileNumberController.text = "";
           otpController.text = "";
           selectedCountryCode = AppStrings.defaultCountryCode;
@@ -250,6 +250,7 @@ class AuthViewModel with ChangeNotifier {
       ApiResponse<LoginResponse> repoRes =
           await authRepository.verifyOTPRepo(verifyRequest);
       if (repoRes.statusCode == 200) {
+        print("yes coming from 1st email verify popup");
         var res = repoRes.body?.data;
         print("sub price 2::::+++++ ${res?.subscriptionPrice}");
         if (res?.isEmailVerified == true && res?.isMobileVerified == true) {
@@ -262,20 +263,19 @@ class AuthViewModel with ChangeNotifier {
               gender: res?.gender ?? '',
               nationality: res?.nationality ?? '',
               loginBy: 'mobile');
-          var subsRes =  LocalSubscriptionResponse(
-            subscriptionStatus: res?.subscriptionStatus,
+          var subsRes = LocalSubscriptionResponse(
+              subscriptionStatus: res?.subscriptionStatus,
               planId: res?.subscription?.planId,
-            title: res?.subscription?.title,
-            description: res?.subscription?.description,
-            currencyCode: res?.subscription?.currencyCode,
-            currencySymbol: res?.subscription?.currencySymbol,
-            duration: res?.subscription?.duration,
-            durationType: res?.subscription?.durationType,
-            price: res?.subscriptionPrice,
-            rawPrice: res?.subscription?.rawPrice,
-            subscriptionStart: res?.subscriptionStart,
-            subscriptionEnd: res?.subscriptionEnd
-          );
+              title: res?.subscription?.title,
+              description: res?.subscription?.description,
+              currencyCode: res?.subscription?.currencyCode,
+              currencySymbol: res?.subscription?.currencySymbol,
+              duration: res?.subscription?.duration,
+              durationType: res?.subscription?.durationType,
+              price: res?.subscriptionPrice,
+              rawPrice: res?.subscription?.rawPrice,
+              subscriptionStart: res?.subscriptionStart,
+              subscriptionEnd: res?.subscriptionEnd);
           print(subsRes.toJson());
           SharedPref().save('user', json.encode(subsRes));
           // if(res?.subscription != null) {
@@ -539,7 +539,8 @@ class AuthViewModel with ChangeNotifier {
         //authVM.getGenderNationalityInitialize(context);
 
         await LocalStorage().logout();
-        context.go(Routes.loginMobile);
+        //context.go(Routes.loginMobile);
+        context.go(Routes.loginEmail);
       } else {
         isLoading = false;
         notifyListeners();
@@ -607,6 +608,7 @@ class AuthViewModel with ChangeNotifier {
       String mobile = "",
       String callFrom = "registration",
       String username = "",
+      RegistrationResponse? registrationData,
       var gender,
       var nationality,
       String saveToken = ""}) async {
@@ -627,6 +629,7 @@ class AuthViewModel with ChangeNotifier {
     try {
       ApiResponse<BaseResponse> repoRes =
           await authRepository.verifyEmailRepo(resendRequest);
+
       if (repoRes.statusCode == 200) {
         isLoading = false;
         notifyListeners();
@@ -639,11 +642,55 @@ class AuthViewModel with ChangeNotifier {
               .translate('yourEmailHasBeenVerifiedSuccessfully'),
         );
         if (callFrom == "registration") {
-          context.push(Routes.loginOtp, extra: {
-            'countryCode': countryCode,
-            'mobile': mobile,
-            'isShowComplete': true
-          });
+          print("yes coming from registration");
+
+          // context.push(Routes.loginOtp, extra: {
+          //   'countryCode': countryCode,
+          //   'mobile': mobile,
+          //   'isShowComplete': true
+          // });
+
+          var user = registrationData?.data?.user;
+
+          await LocalStorage().saveUserInfo(
+            token: repoRes.body?.token,
+            name: user?.email ?? '',
+            email: user?.email ?? '',
+            countryCode: user?.countryCode ?? '',
+            phoneNo: user?.mobile ?? '',
+            gender: user?.gender ?? '',
+            nationality: user?.nationality ?? '',
+            loginBy: 'email',
+          );
+
+          var subsRes = LocalSubscriptionResponse(
+            subscriptionStatus: user?.subscriptionStatus,
+            planId: user?.subscription?.id,
+            title: user?.subscription?.title,
+            description: user?.subscription?.description,
+            currencyCode: user?.subscription?.currencyCode,
+            currencySymbol: user?.subscription?.currencySymbol,
+            duration: user?.subscription?.duration,
+            price: user?.subscriptionPrice,
+            rawPrice: user?.subscription?.rawPrice,
+            subscriptionStart: user?.subscriptionStart,
+            subscriptionEnd: user?.subscriptionEnd,
+          );
+
+          SharedPref().save('user', json.encode(subsRes.toJson()));
+
+          print("FULL RESPONSE ::::: ${registrationData}");
+          print("DATA ::::: ${registrationData?.data}");
+          print("USER ::::: ${registrationData?.data?.user}");
+
+          print("Saved Email: ${registrationData?.data?.user?.email}");
+          print("Saved Mobile: ${registrationData?.data?.user?.mobile}");
+          print("Saved token: ${registrationData?.token}");
+
+          context.pushReplacement(Routes.complate);
+          //context.pushReplacement(Routes.home);
+
+
         } else if (callFrom == "forgot") {
           var res = repoRes.body;
           context.push(Routes.resetPassword, extra: {
@@ -660,7 +707,7 @@ class AuthViewModel with ChangeNotifier {
               phoneNo: mobile,
               gender: gender,
               nationality: nationality,
-              loginBy: 'mobile');
+              loginBy: 'email');
 
           context.pushReplacement(Routes.complate);
         }
@@ -705,16 +752,16 @@ class AuthViewModel with ChangeNotifier {
     notifyListeners();
   }
 
-  Future<void> handleRegistration(BuildContext context,
-      {
-     //   String username = "",
-      String email = "",
-      String countryCode = "",
-      String mobile = "",
-      String password = "",
-      // var gender,
-      // var nationality
-      }) async {
+  Future<void> handleRegistration(
+    BuildContext context, {
+    //   String username = "",
+    String email = "",
+    String countryCode = "",
+    String mobile = "",
+    String password = "",
+    // var gender,
+    // var nationality
+  }) async {
     bool hasInternet = await isInternetAvailable(context);
     if (!hasInternet) {
       return;
@@ -727,10 +774,10 @@ class AuthViewModel with ChangeNotifier {
 
     fcmToken = await FirebaseMessaging.instance.getToken() ?? "";
 
-    final platform = Platform.isAndroid? "android" : "ios";
+    final platform = Platform.isAndroid ? "android" : "ios";
 
     var registrationRequest = RegistrationRequest(
-       // username: username,
+        // username: username,
         email: email,
         preferredLang: savedLanguage,
         password: password,
@@ -739,13 +786,17 @@ class AuthViewModel with ChangeNotifier {
         // gender: gender,
         // nationality: nationality,
         deviceToken: fcmToken,
-       platform: platform
-    );
+        platform: platform);
 
     try {
       ApiResponse<RegistrationResponse> repoRes =
           await authRepository.registrationRepo(registrationRequest);
+
+      final registrationResponse = repoRes.body; // 👈 store first
+
       if (repoRes.statusCode == 200 || repoRes.statusCode == 201) {
+        print("REG RESPONSE ::: $registrationResponse");
+
         var emailOTP = TextEditingController();
         DialogManager().showVerifyEmailDialog(
           email: email,
@@ -772,6 +823,7 @@ class AuthViewModel with ChangeNotifier {
                 mobile: mobile,
                 emailOtp: emailOTP.text,
                 email: email,
+                registrationData: registrationResponse, // 👈 yaha pass karo
               );
             }
           },
@@ -836,10 +888,10 @@ class AuthViewModel with ChangeNotifier {
     final String fcmToken;
 
     fcmToken = await FirebaseMessaging.instance.getToken() ?? "";
-    final platform = Platform.isAndroid? "android" : "ios";
+    final platform = Platform.isAndroid ? "android" : "ios";
 
     var registrationRequest = RegistrationRequest(
-       // username: username,
+        // username: username,
         email: email,
         preferredLang: savedLanguage,
         password: password,
@@ -848,7 +900,7 @@ class AuthViewModel with ChangeNotifier {
         gender: gender,
         nationality: nationality,
         deviceToken: fcmToken,
-    platform: platform);
+        platform: platform);
 
     try {
       ApiResponse<RegistrationResponse> repoRes = await authRepository
@@ -858,21 +910,21 @@ class AuthViewModel with ChangeNotifier {
         print("sub price 3::::+++++ ${res?.user?.subscriptionPrice}");
         await LocalStorage()
             .saveUserInfo(gender: gender, nationality: nationality);
-       var subsRes =  LocalSubscriptionResponse(
+        var subsRes = LocalSubscriptionResponse(
           subscriptionStatus: res?.user?.subscriptionStatus,
           title: res?.user?.subscription?.title,
           description: res?.user?.subscription?.description,
           currencyCode: res?.user?.subscription?.currencyCode,
-         currencySymbol: res?.user?.subscription?.currencySymbol,
-         duration: res?.user?.subscription?.duration,
-         durationType: res?.user?.subscription?.durationType,
-         price: res?.user?.subscriptionPrice,
-         rawPrice: res?.user?.subscription?.rawPrice,
-           subscriptionStart: res?.user?.subscriptionStart,
-           subscriptionEnd: res?.user?.subscriptionEnd,
-         planId: res?.user?.subscription?.planId,
+          currencySymbol: res?.user?.subscription?.currencySymbol,
+          duration: res?.user?.subscription?.duration,
+          durationType: res?.user?.subscription?.durationType,
+          price: res?.user?.subscriptionPrice,
+          rawPrice: res?.user?.subscription?.rawPrice,
+          subscriptionStart: res?.user?.subscriptionStart,
+          subscriptionEnd: res?.user?.subscriptionEnd,
+          planId: res?.user?.subscription?.planId,
         );
-       print(subsRes.toJson());
+        print(subsRes.toJson());
         SharedPref().save('user', json.encode(subsRes));
         // if(res?.user?.subscription != null) {
         //   await LocalStorage().saveSubscribeInfo(
@@ -1064,7 +1116,6 @@ class AuthViewModel with ChangeNotifier {
   //   notifyListeners();
   // }
 
-
   Future<void> handleForgot(
     BuildContext context, {
     String email = "",
@@ -1228,7 +1279,7 @@ class AuthViewModel with ChangeNotifier {
     try {
       ApiResponse<BaseResponse> repoRes = await authRepository.logoutRepo();
       if (repoRes.statusCode == 200) {
-       // getGenderNationalityInitialize(context);
+        // getGenderNationalityInitialize(context);
         SnackbarManager().showTopSnack(
             context,
             backgroundColor: MyColors.green,

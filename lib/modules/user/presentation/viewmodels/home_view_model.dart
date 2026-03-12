@@ -629,7 +629,7 @@ class HomeViewModel with ChangeNotifier {
         nationalityController.text = selectedNationality;
         await LocalStorage().saveUserInfo(
             gender: res?.gender ?? null, nationality: res?.nationality ?? null);
-
+print("Yes came IN HOME view model");
         await setProfileData(context, isNotUpdate: false);
       } else {
         switch (repoRes.statusCode) {

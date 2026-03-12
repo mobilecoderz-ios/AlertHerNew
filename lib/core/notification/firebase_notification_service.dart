@@ -103,7 +103,8 @@ class FirebaseNotificationService {
       homeVM.resetValues();
 
       await LocalStorage().logout();
-      context.go(Routes.loginMobile);
+      //context.go(Routes.loginMobile);
+      context.go(Routes.loginEmail);
     } else {
       print("Unknown notification type.");
     }

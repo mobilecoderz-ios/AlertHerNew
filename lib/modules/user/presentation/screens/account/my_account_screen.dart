@@ -255,7 +255,8 @@ class _MyAccountScreenState extends State<MyAccountScreen> {
                       SharedPref().remove("user");
                       SharedPref().remove("loginData");
                       await LocalStorage().logout();
-                      context.go(Routes.loginMobile);
+                      //context.go(Routes.loginMobile);
+                      context.go(Routes.loginEmail);
                     },
                   );
                 },

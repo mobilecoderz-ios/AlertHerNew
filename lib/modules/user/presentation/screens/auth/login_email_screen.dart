@@ -237,7 +237,8 @@ class _LoginEmailScreenState extends State<LoginEmailScreen> {
                           const Text("Login with Phone no GFJ."),
                           TextButton(
                             onPressed: () {
-                              context.go(Routes.loginMobile);
+                              //context.go(Routes.loginMobile);
+                              context.go(Routes.loginEmail);
                             },
                             child: const Text("Click Here"),
                           ),

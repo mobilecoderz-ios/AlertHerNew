@@ -143,7 +143,7 @@ class AuthRepository {
     Dbg.p("Status :: ${response.statusCode}");
     Dbg.p("Body :: ${response.body}");
     Dbg.p("Request :: ${json.encode(req.toJson())}");
-    if (response.statusCode == ApiStatusCode.success200.value) {
+  if (response.statusCode >= 200 && response.statusCode < 300) {
       final Map<String, dynamic> responseData = json.decode(response.body);
       final res = RegistrationResponse.fromJson(responseData);
       return ApiResponse.success(res);

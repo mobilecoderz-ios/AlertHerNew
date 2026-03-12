@@ -59,7 +59,8 @@ class Routes {
         redirect: (context, state) {
           if (selectedLanguageGoto == "select") {
             //return Routes.subscription;
-           return Routes.loginMobile;
+           //return Routes.loginMobile;
+           return Routes.loginEmail;
           }
         },
       ),
