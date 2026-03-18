@@ -146,22 +146,16 @@ class _HomeScreenState extends State<HomeScreen> {
   }
 
   Future<void> setReviewStats() async {
-    
+    print("Yes came in home screen state");
     screenLoading = true;
     final homeVM = Provider.of<HomeViewModel>(context, listen: false);
     await homeVM.resetReviewValues();
-    await homeVM.handleReviewStats(context);
+    homeVM.handleReviewStats(context);
     final userInfo = await localStorage.getAdditionalUserInfo();
     countryCode = userInfo["countryCode"] ?? "";
     mobile = userInfo["phoneNo"] ?? "";
     await homeVM.reviewHistory(context, countryCode, mobile, flag: true);
     screenLoading = false;
-    print("Yes came here");
-          print("Full UserInfo: $userInfo");
-print("Mobile from storage: $mobile");
-  print("Email from storage: ${userInfo["email"]}");
-
-
   }
 
 

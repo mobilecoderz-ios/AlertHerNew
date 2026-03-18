@@ -85,12 +85,25 @@ class _ForgotPasswordScreenState extends State<ForgotPasswordScreen> {
                           crossAxisAlignment: CrossAxisAlignment.start,
                           children: [
                             SB.h(5),
-                            TextHeading(
-                              text: AppLocalizations.of(context).translate('pleaseEnterYourRegisteredEmail'),
-                              fontWeight: FontWeight.w400,
-                              fontSize: 14,
-                              color: MyColors.blackLight,
-                            ),
+                            // TextHeading(
+                            //   text: AppLocalizations.of(context).translate('pleaseEnterYourRegisteredEmail'),
+                            //   fontWeight: FontWeight.w400,
+                            //   fontSize: 14,
+                            //   color: MyColors.blackLight,
+                            // ),
+
+                            SizedBox(
+  width: double.infinity,
+  child: Text(
+    "Please enter your registered Email, We will send you an email to forgot password.",
+    style: TextStyle(
+      fontSize: 14,
+      fontWeight: FontWeight.w500,
+      color: MyColors.blackLight,
+    ),
+  ),
+),
+
                             SB.h(40),
                             TextSubHeading(
                               text: AppLocalizations.of(context).translate('email'),

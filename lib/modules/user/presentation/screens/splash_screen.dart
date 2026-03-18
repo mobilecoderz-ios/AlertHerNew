@@ -29,7 +29,7 @@ class _SplashScreenState extends State<SplashScreen> {
 
         //MARK : - CHANGED MY D.J
         //context.pushReplacement(Routes.loginMobile);
-        context.pushReplacement(Routes.loginEmail);
+        context.push(Routes.loginEmail);
 
       }
     });
