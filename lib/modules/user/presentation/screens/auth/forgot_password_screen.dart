@@ -28,120 +28,127 @@ class _ForgotPasswordScreenState extends State<ForgotPasswordScreen> {
     return SafeArea(
       child: Scaffold(
         backgroundColor: MyColors.white,
-        body: Consumer<AuthViewModel>(
-            builder: (mContext, authVM, child) {
-              return Stack(
-                fit: StackFit.expand,
-                children: [
-                  Positioned.fill(
-                    top: 0,
-                    left: 0,
-                    right: 0,
-                    child: Container(
-                      color: MyColors.primaryLight,
-                      padding:
-                      const EdgeInsets.only(top: 25, left: 17, right: 15),
-                      child: Row(
-                        mainAxisAlignment: MainAxisAlignment.start,
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        children: [
-                          GestureDetector(
-                            onTap: ()=> Navigator.of(context).pop(),
-                            child: SvgPicture.asset(
-                              ConstImages.backArrow,
-                              height: 28,
-                              width: 28,
-                            ),
-                          ),
-                          SB.w(20),
-                          TextHeading(
-                            text: AppLocalizations.of(context).translate('forgotPasswordTitle'),
-                            fontWeight: FontWeight.w500,
-                            fontSize: 18,
-                            color: MyColors.black,
-                          ),
-                        ],
-                      ),
-                    ),
-                  ),
-                  Positioned.fill(
-                    top: 70,
-                    left: 0,
-                    right: 0,
-                    child: Container(
-                      decoration: const BoxDecoration(
-                        color: Colors.white,
-                        borderRadius: BorderRadius.only(
-                          topLeft: Radius.circular(30),
-                          topRight: Radius.circular(30),
+        body: Consumer<AuthViewModel>(builder: (mContext, authVM, child) {
+          return Stack(
+            fit: StackFit.expand,
+            children: [
+              Positioned.fill(
+                top: 0,
+                left: 0,
+                right: 0,
+                child: Container(
+                  color: MyColors.primaryLight,
+                  padding: const EdgeInsets.only(top: 25, left: 17, right: 15),
+                  child: Row(
+                    mainAxisAlignment: MainAxisAlignment.start,
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      GestureDetector(
+                        onTap: () => Navigator.of(context).pop(),
+                        child: SvgPicture.asset(
+                          ConstImages.backArrow,
+                          height: 28,
+                          width: 28,
                         ),
                       ),
-                      
-                      padding:
-                      const EdgeInsets.only(top: 20, left: 20, right: 20),
-                      child: SingleChildScrollView(
-                        child: Column(
-                          mainAxisAlignment: MainAxisAlignment.start,
-                          crossAxisAlignment: CrossAxisAlignment.start,
-                          children: [
-                            SB.h(5),
-                            // TextHeading(
-                            //   text: AppLocalizations.of(context).translate('pleaseEnterYourRegisteredEmail'),
-                            //   fontWeight: FontWeight.w400,
-                            //   fontSize: 14,
-                            //   color: MyColors.blackLight,
-                            // ),
-
-                            SizedBox(
-  width: double.infinity,
-  child: Text(
-    "Please enter your registered Email, We will send you an email to forgot password.",
-    style: TextStyle(
-      fontSize: 14,
-      fontWeight: FontWeight.w500,
-      color: MyColors.blackLight,
-    ),
-  ),
-),
-
-                            SB.h(40),
-                            TextSubHeading(
-                              text: AppLocalizations.of(context).translate('email'),
-                              fontWeight: FontWeight.w400,
-                              fontSize: 13,
-                              color: MyColors.black,
-                            ),
-                            SB.h(10),
-                            NormalTextField(
-                              controller: emailController,
-                              hintText: AppLocalizations.of(context).translate('enterRegisteredEmail'),
-                              inputType: TextInputType.text,
-                              fillColor: MyColors.white,
-                            ),
-                            SB.h(50),
-                            PrimaryButton(
-                              isLoading: authVM.isLoading,
-                              buttonText: AppLocalizations.of(context).translate('sendEmail'),
-                              onPressed: () {
-                                var email = emailController.text.trim();
-                                if (email.isEmpty) {
-                                  SnackbarManager().showBottomSnack(context, AppLocalizations.of(context).translate('emailCannotBeEmpty'));
-                                }else if (!email.contains('@') || !email.contains('.')) {
-                                  SnackbarManager().showBottomSnack(context, AppLocalizations.of(context).translate('emailInvalidFormat'));
-                                } else {
-                                  authVM.handleForgot(context, email: email);
-                                }
-                              },
-                              // isDisabled: !isMobileNumberValid,
-                            )
-                          ],
-                        ),
+                      SB.w(20),
+                      TextHeading(
+                        text: AppLocalizations.of(context)
+                            .translate('forgotPasswordTitle'),
+                        fontWeight: FontWeight.w500,
+                        fontSize: 18,
+                        color: MyColors.black,
                       ),
+                    ],
+                  ),
+                ),
+              ),
+              Positioned.fill(
+                top: 70,
+                left: 0,
+                right: 0,
+                child: Container(
+                  decoration: const BoxDecoration(
+                    color: Colors.white,
+                    borderRadius: BorderRadius.only(
+                      topLeft: Radius.circular(30),
+                      topRight: Radius.circular(30),
                     ),
                   ),
-                ],
-              );
-            }),
+                  padding: const EdgeInsets.only(top: 20, left: 20, right: 20),
+                  child: SingleChildScrollView(
+                    child: Column(
+                      mainAxisAlignment: MainAxisAlignment.start,
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        SB.h(5),
+                        // TextHeading(
+                        //   text: AppLocalizations.of(context).translate('pleaseEnterYourRegisteredEmail'),
+                        //   fontWeight: FontWeight.w400,
+                        //   fontSize: 14,
+                        //   color: MyColors.blackLight,
+                        // ),
+
+                      //Changed by d.j
+                        SizedBox(
+                          width: double.infinity,
+                          child: Text(
+                            "Please enter your registered Email, We will send you an email to forgot password.",
+                            style: TextStyle(
+                              fontSize: 14,
+                              fontWeight: FontWeight.w500,
+                              color: MyColors.blackLight,
+                            ),
+                          ),
+                        ),
+
+                        SB.h(40),
+                        TextSubHeading(
+                          text: AppLocalizations.of(context).translate('email'),
+                          fontWeight: FontWeight.w400,
+                          fontSize: 13,
+                          color: MyColors.black,
+                        ),
+                        SB.h(10),
+                        NormalTextField(
+                          controller: emailController,
+                          hintText: AppLocalizations.of(context)
+                              .translate('enterRegisteredEmail'),
+                          inputType: TextInputType.text,
+                          fillColor: MyColors.white,
+                        ),
+                        SB.h(50),
+                        PrimaryButton(
+                          isLoading: authVM.isLoading,
+                          buttonText: AppLocalizations.of(context)
+                              .translate('sendEmail'),
+                          onPressed: () {
+                            var email = emailController.text.trim();
+                            if (email.isEmpty) {
+                              SnackbarManager().showBottomSnack(
+                                  context,
+                                  AppLocalizations.of(context)
+                                      .translate('emailCannotBeEmpty'));
+                            } else if (!email.contains('@') ||
+                                !email.contains('.')) {
+                              SnackbarManager().showBottomSnack(
+                                  context,
+                                  AppLocalizations.of(context)
+                                      .translate('emailInvalidFormat'));
+                            } else {
+                              authVM.handleForgot(context, email: email);
+                            }
+                          },
+                          // isDisabled: !isMobileNumberValid,
+                        )
+                      ],
+                    ),
+                  ),
+                ),
+              ),
+            ],
+          );
+        }),
         bottomNavigationBar: const NetworkStatus(),
       ),
     );

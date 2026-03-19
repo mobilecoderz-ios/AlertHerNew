@@ -11,7 +11,7 @@ class AppStrings {
   static const String german = 'German';
   static const String spanish = 'Spanish';
   static const String romanian = 'Romanian';
-  static const String defaultCountryCode = '+44';
+  static const String defaultCountryCode = '+66';
   static const String defaultCountryCodeInit = 'IN';
   static const String contactUsEmail = 'info@alerther.co.uk';
   static const String contactUsSubject = '';
