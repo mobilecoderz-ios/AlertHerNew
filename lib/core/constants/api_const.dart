@@ -1,7 +1,7 @@
 class ApiConst{
   // User API
-  //static const String baseURL = 'https://api.alerther.co.uk';//Production
-  static const String baseURL = 'http://13.135.32.217:3000';//Development
+  static const String baseURL = 'https://api.alerther.co.uk';//Production
+  //static const String baseURL = 'http://13.135.32.217:3000';//Development
   static const String login = '/apis/v1/auth/login';
   static const String signup = '/apis/v1/auth/signup';
   static const String forgot = '/apis/v1/auth/forgotPassword';
