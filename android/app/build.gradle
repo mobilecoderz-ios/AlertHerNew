@@ -5,7 +5,6 @@ plugins {
     id "com.google.gms.google-services"
 }
 
-// ✅ plugins ke baad hi likhna hai
 def keystoreProperties = new Properties()
 def keystorePropertiesFile = rootProject.file("key.properties")
 
